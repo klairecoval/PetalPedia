@@ -1,0 +1,29 @@
+{
+  "name": "petalpedia",
+  "version": "1.0.0",
+  "description": "PetalPedia is an API-powered app",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests Complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klairecoval/PetalPedia.git"
+  },
+  "keywords": [
+    "petal",
+    "flower"
+  ],
+  "author": "Claire Koval",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/klairecoval/PetalPedia/issues"
+  },
+  "homepage": "https://github.com/klairecoval/PetalPedia#readme",
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}

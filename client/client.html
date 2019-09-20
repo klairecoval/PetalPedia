@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PetalPedia</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+  </script>
+</head>
+<body>
+    <h3>PetalPedia</h3>
+    <form id="nameForm" action="/addUser" method="post">
+        <label for="name">Name: </label>
+        <input id="nameField" type="text" name="name" />
+        <label for="age">Age: </label>
+        <input id="ageField" type="number" name="age" min="0" max="100" step="1"/>
+        <input type="submit" value="Add User" />
+    </form>
+
+    <form id="flowerForm">
+        <label for="name">Name: </label>
+        <input id="flowerNameField" type="text" name="name" />
+
+        <label for="image">Image: </label>
+        <input id="flowerImage" type="text" name="image"/>
+
+        <label for="sunNeeds">Sun Needs: </label>
+        <input id="flowerSunNeeds" type="text" name="sunNeeds"/>
+
+        <label for="soilNeeds">Soil Needs: </label>
+        <input id="flowerSoilNeeds" type="text" name="soilNeeds"/>
+
+        <label for="height">Average Height: </label>
+        <input id="flowerHeight" type="text" name="height"/>
+
+        <label for="bloomTime">Bloom Time: </label>
+        <input id="flowerBloomTime" type="text" name="bloomTime"/>
+
+        <label for="growZone">Optimal Grow Zone: </label>
+        <input id="flowerGrowZone" type="text" name="growZone"/>
+
+        <label for="bonusFact">Bonus Fact: </label>
+        <input id="flowerBonusFact" type="text" name="bonusFact"/>
+
+        <input type="submit" value="Add Flower" />
+    </form>
+    
+</body>
+</html>
