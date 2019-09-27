@@ -1,5 +1,5 @@
 # PetalPedia
-An API-Powered App for IGME 430. App name from Jason Mayotte
+An API-Powered App for IGME 430.
 
 Flower Specs:
 - Sun needs
