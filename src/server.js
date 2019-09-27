@@ -1,13 +1,16 @@
+
 const http = require('http');
 const url = require('url');
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
+const cssHandler = require('./cssResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
   '/': htmlHandler.getIndex,
-  '/getFlowers': jsonHandler.getFlowers,
+  '/style.css': cssHandler.getStyle,
+  '/getUsers': jsonHandler.getUsers,
   '/notReal': jsonHandler.notReal,
   '/addUser': jsonHandler.addUser,
 };
