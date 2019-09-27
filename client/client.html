@@ -6,17 +6,82 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
+      const handleResponse = (xhr, parseJSON) => {
+      const content = document.querySelector('#content');
+      switch (xhr.status) {
+        case 200:
+          content.innerHTML = `<b>Success</b>`;
+          break;
+        case 201:
+          content.innerHTML = `<b>Create</b>`;
+          break;
+        case 204:
+          content.innerHTML = `<b>Updated (No Content)</b>`;
+          break;
+        case 400:
+          content.innerHTML = `<b>Bad Request</b>`;
+          break;
+        case 404:
+          content.innerHTML = `<b>Resource Not Found</b>`;
+          break;
+        default:
+          break;
+      }
+      if (parseJSON) {
+        const response = JSON.parse(xhr.response);
+        console.dir(response.message);
+        if (xhr.status === 200) {
+          content.innerHTML += `<p>${JSON.stringify(response.message.users)}</p>`;
+        } else {
+          content.innerHTML += `<p>${response.message}</p>`;
+        }
+      }
+    };
+    const sendRequest = (url, type, e) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(type, url);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.onload = () => {
+        if (type === 'get' || (type === 'post' && xhr.status !== 204)) {
+          handleResponse(xhr, true);
+        } else if (type === 'head' || (type === 'post' && xhr.status === 204)) {
+          handleResponse(xhr, false);
+        }
+      };
+      if (type === 'post') {
+        const nameForm = document.querySelector('#nameForm');
+        const nameField = nameForm.querySelector('#nameField');
+        const ageField = nameForm.querySelector('#ageField');
+        const formData = `name=${nameField.value}&age=${ageField.value}`;
+        console.dir(formData);
+        xhr.send(formData);
+        return false;
+      } else {
+        xhr.send();
+      }
+    };
+    const init = () => {
+      const nameForm = document.querySelector('#nameForm');
+      const userForm = document.querySelector('#userForm');
+      const getUser = userForm.querySelector('input');
+      const postUser = nameForm.querySelectorAll('input')[2];
+      getUser.addEventListener('click', e => {
+        e.preventDefault();
+        const request = userForm.querySelector('#methodSelect').value;
+        const url = userForm.querySelector('#urlField').value;
+        sendRequest(url, request, e);
+      });
+      postUser.addEventListener('click', e => {
+        e.preventDefault();
+        sendRequest('/addUser', 'post', e);
+      });
+    }
+    window.onload = init;
   </script>
 </head>
 <body>
-    <h3>PetalPedia</h3>
-    <form id="nameForm" action="/addUser" method="post">
-        <label for="name">Name: </label>
-        <input id="nameField" type="text" name="name" />
-        <label for="age">Age: </label>
-        <input id="ageField" type="number" name="age" min="0" max="100" step="1"/>
-        <input type="submit" value="Add User" />
-    </form>
+    <h3 id="title">PetalPedia</h3>
 
     <form id="flowerForm">
         <label for="name">Name: </label>
