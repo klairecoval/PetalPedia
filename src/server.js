@@ -10,9 +10,9 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const urlStruct = {
   '/': htmlHandler.getIndex,
   '/style.css': cssHandler.getStyle,
-  '/getUsers': jsonHandler.getUsers,
+  '/getFlowers': jsonHandler.getFlowers,
   '/notReal': jsonHandler.notReal,
-  '/addUser': jsonHandler.addUser,
+  '/addFlower': jsonHandler.addFlower,
 };
 
 const onRequest = (request, response) => {

@@ -30,7 +30,7 @@ const notReal = (request, response) => {
   return respondJSON(request, response, 404, responseJSON);
 };
 
-const addUser = (request, response) => {
+const addFlower = (request, response) => {
   let body = [];
 
   request.on('data', (chunk) => {
@@ -43,7 +43,7 @@ const addUser = (request, response) => {
 
     const responseJSON = {};
 
-    if (!body.name || !body.age) {
+    if (!body.name || !body.image || !body.sunNeeds || !body.soilNeeds || !body.height || !body.bloomTime || !body.growZone || !body.bonusFact) {
       responseJSON.message = 'All fields are required.';
       responseJSON.id = 'missingParams';
       return respondJSON(request, response, 400, responseJSON);
@@ -58,7 +58,13 @@ const addUser = (request, response) => {
     }
 
     flowers[body.name].name = body.name;
-    flowers[body.name].age = body.age;
+    flowers[body.name].image = body.image;
+    flowers[body.name].sunNeeds = body.sunNeeds;
+    flowers[body.name].soilNeeds = body.soilNeeds;
+    flowers[body.name].height = body.height;
+    flowers[body.name].bloomTime = body.bloomTime;
+    flowers[body.name].growZone = body.growZone;
+    flowers[body.name].bonusFact = body.bonusFact;
 
     if (responseCode === 201) {
       responseJSON.message = 'Created New Flower Successfully';
@@ -72,5 +78,5 @@ const addUser = (request, response) => {
 module.exports = {
   getFlowers,
   notReal,
-  addUser,
+  addFlower,
 };

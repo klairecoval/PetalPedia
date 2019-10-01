@@ -3,6 +3,7 @@
 <head>
   <title>PetalPedia</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
@@ -31,7 +32,7 @@
         const response = JSON.parse(xhr.response);
         console.dir(response.message);
         if (xhr.status === 200) {
-          content.innerHTML += `<p>${JSON.stringify(response.message.users)}</p>`;
+          content.innerHTML += `<p>${JSON.stringify(response.message.flowers)}</p>`;
         } else {
           content.innerHTML += `<p>${response.message}</p>`;
         }
@@ -50,10 +51,19 @@
         }
       };
       if (type === 'post') {
-        const nameForm = document.querySelector('#nameForm');
-        const nameField = nameForm.querySelector('#nameField');
-        const ageField = nameForm.querySelector('#ageField');
-        const formData = `name=${nameField.value}&age=${ageField.value}`;
+        const flowerForm = document.querySelector('#flowerForm');
+        const nameField = flowerForm.querySelector('#flowerNameField');
+        const imageField = flowerForm.querySelector('#flowerImage');
+        const sunField = flowerForm.querySelector('#flowerSunNeeds');
+        const soilField = flowerForm.querySelector('#flowerSoilNeeds');
+        const heightField = flowerForm.querySelector('#flowerHeight');
+        const bloomField = flowerForm.querySelector('#flowerBloomTime');
+        const growField = flowerForm.querySelector('#flowerGrowZone');
+        const bonusField = flowerForm.querySelector('#flowerBonusFact');
+        
+        const formData = `name=${nameField.value}&image=${imageField.value}&sunNeeds=${sunField.value}&soilNeeds=${soilField.value}
+                          &height=${heightField.value}&bloomTime=${bloomField.value}&growZone=${growField.value}&bonusFact=${bonusField.value}`;
+
         console.dir(formData);
         xhr.send(formData);
         return false;
@@ -61,55 +71,82 @@
         xhr.send();
       }
     };
+
     const init = () => {
-      const nameForm = document.querySelector('#nameForm');
-      const userForm = document.querySelector('#userForm');
-      const getUser = userForm.querySelector('input');
-      const postUser = nameForm.querySelectorAll('input')[2];
-      getUser.addEventListener('click', e => {
+      const flowerForm = document.querySelector('#flowerForm');
+      const actionForm = document.querySelector('#actionForm');
+      const getFlowers = actionForm.querySelector('input');
+      const postFlower = flowerForm.querySelectorAll('input')[8];
+
+      getFlowers.addEventListener('click', e => {
         e.preventDefault();
-        const request = userForm.querySelector('#methodSelect').value;
-        const url = userForm.querySelector('#urlField').value;
+        const request = actionForm.querySelector('#methodSelect').value;
+        const url = actionForm.querySelector('#urlField').value;
         sendRequest(url, request, e);
       });
-      postUser.addEventListener('click', e => {
+      postFlower.addEventListener('click', e => {
         e.preventDefault();
-        sendRequest('/addUser', 'post', e);
+        sendRequest('/addFlower', 'post', e);
       });
     }
     window.onload = init;
   </script>
 </head>
 <body>
-    <h3 id="title">PetalPedia</h3>
+  <div id="headerContent">
+    <h1 id="title">PetalPedia</h1>
+    <p>Can I grow the flower that I want in my environment? What kind of soil do I need? How tall will it get?</p>
+    <p>Starting a flowerbed can be confusing, but with PetalPedia, it doesn't have to be.</p>
+    <p>Sort through a multitude of flowers on our site or add your own to help others!</p>
+  </div>
 
-    <form id="flowerForm">
-        <label for="name">Name: </label>
-        <input id="flowerNameField" type="text" name="name" />
+  <form id="flowerForm">
+    <div id="inputGroup1">
+      <label for="name">Name: </label>
+      <input id="flowerNameField" type="text" name="name" />
 
-        <label for="image">Image: </label>
-        <input id="flowerImage" type="text" name="image"/>
+      <label for="image">Image: </label>
+      <input id="flowerImage" type="text" name="image"/>
 
-        <label for="sunNeeds">Sun Needs: </label>
-        <input id="flowerSunNeeds" type="text" name="sunNeeds"/>
+      <label for="sunNeeds">Sun Needs: </label>
+      <input id="flowerSunNeeds" type="text" name="sunNeeds"/>
 
-        <label for="soilNeeds">Soil Needs: </label>
-        <input id="flowerSoilNeeds" type="text" name="soilNeeds"/>
+      <label for="soilNeeds">Soil Needs: </label>
+      <input id="flowerSoilNeeds" type="text" name="soilNeeds"/>
+    </div>
+    <div id="inputGroup2">
+      <label for="height">Average Height: </label>
+      <input id="flowerHeight" type="text" name="height"/>
 
-        <label for="height">Average Height: </label>
-        <input id="flowerHeight" type="text" name="height"/>
+      <label for="bloomTime">Bloom Time: </label>
+      <input id="flowerBloomTime" type="text" name="bloomTime"/>
 
-        <label for="bloomTime">Bloom Time: </label>
-        <input id="flowerBloomTime" type="text" name="bloomTime"/>
+      <label for="growZone">Optimal Grow Zone: </label>
+      <input id="flowerGrowZone" type="text" name="growZone"/>
 
-        <label for="growZone">Optimal Grow Zone: </label>
-        <input id="flowerGrowZone" type="text" name="growZone"/>
+      <label for="bonusFact">Bonus Fact: </label>
+      <input id="flowerBonusFact" type="text" name="bonusFact"/>
+    </div>
+    <input type="submit" value="Add Flower" />
+  </form>
 
-        <label for="bonusFact">Bonus Fact: </label>
-        <input id="flowerBonusFact" type="text" name="bonusFact"/>
+  <form id="actionForm" action="/getFlowers" method="get">
+    <select id='urlField'>
+      <option value='/getFlowers'>/getFlowers</option>
+      <option value='/notReal'>/notReal</option>
+    </select>
+    <select id="methodSelect">
+      <option value="get">GET</option>
+      <option value="head">HEAD</option>
+    </select>
+    <input type="submit" value="Get Flower" />
+  </form>
 
-        <input type="submit" value="Add Flower" />
-    </form>
-    
+  <section id="content">
+  </section>
+
+  <footer>
+    &copy; 2019 Claire Koval
+  </footer> 
 </body>
 </html>
