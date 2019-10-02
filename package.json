@@ -7,7 +7,7 @@
     "start": "node ./src/server.js",
     "pretest": "eslint ./src --fix",
     "test": "echo \"Tests Complete\"",
-    "nodemon": "nodemon --watch ./server ./server/app.js"
+    "nodemon": "nodemon -e js,html,css --watch ./src --watch ./client/"
   },
   "repository": {
     "type": "git",

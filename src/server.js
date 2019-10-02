@@ -11,7 +11,7 @@ const urlStruct = {
   '/': htmlHandler.getIndex,
   '/style.css': cssHandler.getStyle,
   '/getFlowers': jsonHandler.getFlowers,
-  '/notReal': jsonHandler.notReal,
+  '/notFound': htmlHandler.get404Page,
   '/addFlower': jsonHandler.addFlower,
 };
 
@@ -21,7 +21,7 @@ const onRequest = (request, response) => {
   if (urlStruct[parsedUrl.pathname]) {
     urlStruct[parsedUrl.pathname](request, response);
   } else {
-    urlStruct['/notReal'](request, response);
+    urlStruct['/notFound'](request, response);
   }
 };
 

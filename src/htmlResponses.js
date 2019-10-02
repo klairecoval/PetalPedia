@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
+const errorPage = fs.readFileSync(`${__dirname}/../client/notFound.html`);
 
 const getIndex = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/html' });
@@ -8,5 +9,14 @@ const getIndex = (request, response) => {
   response.end();
 };
 
+const get404Page = (request, response) => {
+  response.writeHead(404, { 'Content-Type': 'text/html' });
+  response.write(errorPage);
+  response.end();
+};
 
-module.exports.getIndex = getIndex;
+
+module.exports = {
+  getIndex,
+  get404Page,
+};

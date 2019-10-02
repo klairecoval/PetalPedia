@@ -11,13 +11,13 @@
       const content = document.querySelector('#content');
       switch (xhr.status) {
         case 200:
-          content.innerHTML = `<b>Success</b>`;
+          content.innerHTML = `<b>Refreshed</b>`;
           break;
         case 201:
-          content.innerHTML = `<b>Create</b>`;
+          content.innerHTML = `<b>Flower Created. Click 'Recresh' Button.</b>`;
           break;
         case 204:
-          content.innerHTML = `<b>Updated (No Content)</b>`;
+          content.innerHTML = `<b>Flower updated.</b>`;
           break;
         case 400:
           content.innerHTML = `<b>Bad Request</b>`;
@@ -28,6 +28,7 @@
         default:
           break;
       }
+
       if (parseJSON) {
         const response = JSON.parse(xhr.response);
         console.dir(response.message);
@@ -38,11 +39,14 @@
         }
       }
     };
+
     const sendRequest = (url, type, e) => {
       const xhr = new XMLHttpRequest();
+
       xhr.open(type, url);
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.setRequestHeader('Accept', 'application/json');
+
       xhr.onload = () => {
         if (type === 'get' || (type === 'post' && xhr.status !== 204)) {
           handleResponse(xhr, true);
@@ -61,8 +65,7 @@
         const growField = flowerForm.querySelector('#flowerGrowZone');
         const bonusField = flowerForm.querySelector('#flowerBonusFact');
         
-        const formData = `name=${nameField.value}&image=${imageField.value}&sunNeeds=${sunField.value}&soilNeeds=${soilField.value}
-                          &height=${heightField.value}&bloomTime=${bloomField.value}&growZone=${growField.value}&bonusFact=${bonusField.value}`;
+        const formData = `name=${nameField.value}&image=${imageField.value}&sunNeeds=${sunField.value}&soilNeeds=${soilField.value}&height=${heightField.value}&bloomTime=${bloomField.value}&growZone=${growField.value}&bonusFact=${bonusField.value}`;
 
         console.dir(formData);
         xhr.send(formData);
@@ -80,15 +83,14 @@
 
       getFlowers.addEventListener('click', e => {
         e.preventDefault();
-        const request = actionForm.querySelector('#methodSelect').value;
-        const url = actionForm.querySelector('#urlField').value;
-        sendRequest(url, request, e);
+        sendRequest('/getFlowers', 'get', e);
       });
       postFlower.addEventListener('click', e => {
         e.preventDefault();
         sendRequest('/addFlower', 'post', e);
       });
     }
+
     window.onload = init;
   </script>
 </head>
@@ -131,15 +133,7 @@
   </form>
 
   <form id="actionForm" action="/getFlowers" method="get">
-    <select id='urlField'>
-      <option value='/getFlowers'>/getFlowers</option>
-      <option value='/notReal'>/notReal</option>
-    </select>
-    <select id="methodSelect">
-      <option value="get">GET</option>
-      <option value="head">HEAD</option>
-    </select>
-    <input type="submit" value="Get Flower" />
+    <input type="submit" value="Refresh" />
   </form>
 
   <section id="content">
