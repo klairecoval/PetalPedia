@@ -3,7 +3,9 @@
 }
 
 h1 {
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: 800;
+    text-shadow: 2px 2px #ada990;
 }
 
 body {
