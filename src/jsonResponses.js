@@ -43,7 +43,10 @@ const addFlower = (request, response) => {
 
     const responseJSON = {};
 
-    if (!body.name || !body.image || !body.sunNeeds || !body.soilNeeds || !body.height || !body.bloomTime || !body.growZone || !body.funFact) {
+    if (!body.name ||!body.image ||
+        !body.sunNeeds || !body.soilNeeds ||
+        !body.height || !body.bloomTime ||
+        !body.growZone || !body.funFact) {
       responseJSON.message = 'Please fill out all flower fields.';
       responseJSON.id = 'missingParams';
       return respondJSON(request, response, 400, responseJSON);
