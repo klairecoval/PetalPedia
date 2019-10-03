@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/klairecoval/PetalPedia#readme",
   "devDependencies": {
+    "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "nodemon": "^1.19.2"
