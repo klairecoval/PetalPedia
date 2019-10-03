@@ -3,7 +3,7 @@
 <head>
   <title>PetalPedia</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam:400,700&display=swap" rel="stylesheet">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
@@ -14,13 +14,13 @@
           content.innerHTML = `<b>Refreshed</b>`;
           break;
         case 201:
-          content.innerHTML = `<b>Flower Created. Click 'Recresh' Button.</b>`;
+          content.innerHTML = `<b>Flower Created. Click 'Refresh' Button.</b>`;
           break;
         case 204:
           content.innerHTML = `<b>Flower updated.</b>`;
           break;
         case 400:
-          content.innerHTML = `<b>Bad Request</b>`;
+          content.innerHTML = `<h2>Hey there...are you forgetting something?</h2>`;
           break;
         case 404:
           content.innerHTML = `<b>Resource Not Found</b>`;
@@ -63,9 +63,9 @@
         const heightField = flowerForm.querySelector('#flowerHeight');
         const bloomField = flowerForm.querySelector('#flowerBloomTime');
         const growField = flowerForm.querySelector('#flowerGrowZone');
-        const bonusField = flowerForm.querySelector('#flowerBonusFact');
+        const factField = flowerForm.querySelector('#flowerFunFact');
         
-        const formData = `name=${nameField.value}&image=${imageField.value}&sunNeeds=${sunField.value}&soilNeeds=${soilField.value}&height=${heightField.value}&bloomTime=${bloomField.value}&growZone=${growField.value}&bonusFact=${bonusField.value}`;
+        const formData = `name=${nameField.value}&image=${imageField.value}&sunNeeds=${sunField.value}&soilNeeds=${soilField.value}&height=${heightField.value}&bloomTime=${bloomField.value}&growZone=${growField.value}&funFact=${factField.value}`;
 
         console.dir(formData);
         xhr.send(formData);
@@ -103,7 +103,7 @@
   </div>
 
   <form id="flowerForm">
-    <div id="inputGroup1">
+    <div id="flowerFormGroup1">
       <label for="name">Name: </label>
       <input id="flowerNameField" type="text" name="name" />
 
@@ -116,24 +116,28 @@
       <label for="soilNeeds">Soil Needs: </label>
       <input id="flowerSoilNeeds" type="text" name="soilNeeds"/>
     </div>
-    <div id="inputGroup2">
-      <label for="height">Average Height: </label>
+    <div id="flowerFormGroup2">
+      <label for="height">Height: </label>
       <input id="flowerHeight" type="text" name="height"/>
 
       <label for="bloomTime">Bloom Time: </label>
       <input id="flowerBloomTime" type="text" name="bloomTime"/>
 
-      <label for="growZone">Optimal Grow Zone: </label>
+      <label for="growZone">Grow Zone: </label>
       <input id="flowerGrowZone" type="text" name="growZone"/>
 
-      <label for="bonusFact">Bonus Fact: </label>
-      <input id="flowerBonusFact" type="text" name="bonusFact"/>
+      <label for="funFact">Fun Fact: </label>
+      <input id="flowerFunFact" type="text" name="funFact"/>
     </div>
-    <input type="submit" value="Add Flower" />
+    <div id="addFlower">
+      <input type="submit" value="Add Flower" />
+    </div>
   </form>
 
   <form id="actionForm" action="/getFlowers" method="get">
-    <input type="submit" value="Refresh" />
+    <div id="refresh">
+      <input type="submit" value="Refresh" />
+    </div>
   </form>
 
   <section id="content">

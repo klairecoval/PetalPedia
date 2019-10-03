@@ -43,8 +43,8 @@ const addFlower = (request, response) => {
 
     const responseJSON = {};
 
-    if (!body.name || !body.image || !body.sunNeeds || !body.soilNeeds || !body.height || !body.bloomTime || !body.growZone || !body.bonusFact) {
-      responseJSON.message = 'All fields are required.';
+    if (!body.name || !body.image || !body.sunNeeds || !body.soilNeeds || !body.height || !body.bloomTime || !body.growZone || !body.funFact) {
+      responseJSON.message = 'Please fill out all flower fields.';
       responseJSON.id = 'missingParams';
       return respondJSON(request, response, 400, responseJSON);
     }
@@ -64,10 +64,10 @@ const addFlower = (request, response) => {
     flowers[body.name].height = body.height;
     flowers[body.name].bloomTime = body.bloomTime;
     flowers[body.name].growZone = body.growZone;
-    flowers[body.name].bonusFact = body.bonusFact;
+    flowers[body.name].funFact = body.funFact;
 
     if (responseCode === 201) {
-      responseJSON.message = 'Created New Flower Successfully';
+      responseJSON.message = 'New flower created successfully';
       return respondJSON(request, response, responseCode, responseJSON);
     }
 

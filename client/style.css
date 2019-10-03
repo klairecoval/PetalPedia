@@ -2,8 +2,12 @@
     font-family: 'Be Vietnam', sans-serif;
 }
 
+h1 {
+    font-weight: 700;
+}
+
 body {
-    background-image: url('/leavesBg.png');
+    background-image: url('/assets/leavesBg.png');
 }
 
 #headerContent {
@@ -18,17 +22,45 @@ body {
 
 #flowerForm {
     padding-top: 2rem;
-}
-
-#inputGroup1, #inputGroup2 {
-    align-content: center;
     width: 80%;
     margin: 0 auto;
+}
+
+#flowerFormGroup1, #flowerFormGroup2 {
+    padding-left: 4rem;
 }
 
 input {
     margin-right: 2rem;
     margin-top: 0.5rem;
+}
+
+#addFlower {
+    margin-left: 4rem;
+}
+
+#refresh {
+    width: 80%;
+    margin: 0 auto;
+    padding-left: 4rem;
+}
+
+#refresh input[type=submit] {
+    margin-left: 2.5rem;
+}
+
+input[type=submit] {
+    background: #fe9578;
+    border-radius: 4rem;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background 1s;
+}
+
+input[type=submit]:hover {
+    background: #CB6245;
+    transition: background 1s;
 }
 
 footer {
