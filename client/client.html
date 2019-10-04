@@ -37,10 +37,16 @@
           if (response.message.flowers) {
             for (let key in response.message.flowers) {
               if(response.message.flowers.hasOwnProperty(key)){
+                const h3 = document.createElement('h3');
                 const p = document.createElement('p');
-                p.innerHTML = response.message.flowers[key].name;
-                p.value = `${key}`;
+                const img = document.createElement('IMG');
+                h3.innerHTML = response.message.flowers[key].name;
+                p.innerHTML = response.message.flowers[key].sunNeeds;
+                img.setAttribute("src", response.message.flowers[key].image);
+
+                content.appendChild(h3);
                 content.appendChild(p);
+                content.appendChild(img);
               } 
             }
           }
