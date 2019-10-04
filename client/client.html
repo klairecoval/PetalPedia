@@ -33,7 +33,17 @@
         const response = JSON.parse(xhr.response);
         console.dir(response.message);
         if (xhr.status === 200) {
-          content.innerHTML += `<p>${JSON.stringify(response.message.flowers)}</p>`;
+          // content.innerHTML += `<p>${JSON.stringify(response.message.flowers)}</p>`;
+          if (response.message.flowers) {
+            for (let key in response.message.flowers) {
+              if(response.message.flowers.hasOwnProperty(key)){
+                const p = document.createElement('p');
+                p.innerHTML = response.message.flowers[key].name;
+                p.value = `${key}`;
+                content.appendChild(p);
+              } 
+            }
+          }
         } else {
           content.innerHTML += `<p>${response.message}</p>`;
         }
