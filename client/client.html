@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
   <title>PetalPedia</title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Be+Vietnam:400,800&display=swap" rel="stylesheet">
+  <link rel='stylesheet' type='text/css' href='/style.css'>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap' rel='stylesheet'>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-  <script type="text/babel">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js'></script>
+  <script type='text/babel'>
       const handleResponse = (xhr, parseJSON) => {
+      const response = JSON.parse(xhr.response);
       const content = document.querySelector('#content');
+      
+      function count(obj) { return Object.keys(obj).length; }
+
       switch (xhr.status) {
         case 200:
-          content.innerHTML = `<b>Refreshed</b>`;
+          content.innerHTML = `<h3 class="flowersNum">${count(response.message.flowers)} Flowers</h3>`;
           break;
         case 201:
           content.innerHTML = `<b>Flower Created. Click 'Refresh' Button.</b>`;
@@ -37,16 +41,38 @@
           if (response.message.flowers) {
             for (let key in response.message.flowers) {
               if(response.message.flowers.hasOwnProperty(key)){
-                const h3 = document.createElement('h3');
-                const p = document.createElement('p');
+                const div = document.createElement('div');
                 const img = document.createElement('IMG');
-                h3.innerHTML = response.message.flowers[key].name;
-                p.innerHTML = response.message.flowers[key].sunNeeds;
-                img.setAttribute("src", response.message.flowers[key].image);
+                const h3 = document.createElement('h3');
+                const sunP = document.createElement('p');
+                const soilP = document.createElement('p');
+                const heightP = document.createElement('p');
+                const bloomP = document.createElement('p');
+                const growP = document.createElement('p');
+                const factP = document.createElement('p');
 
-                content.appendChild(h3);
-                content.appendChild(p);
-                content.appendChild(img);
+                h3.innerHTML = response.message.flowers[key].name;
+                sunP.innerHTML = '<b>Sun Needs: </b>' + response.message.flowers[key].sunNeeds;
+                soilP.innerHTML = '<b>Soil Needs: </b>' + response.message.flowers[key].soilNeeds;
+                heightP.innerHTML = '<b>Height: </b>' + response.message.flowers[key].height;
+                bloomP.innerHTML = '<b>Bloom Time: </b>' + response.message.flowers[key].bloomTime;
+                growP.innerHTML = '<b>Grow Zone: </b>' + response.message.flowers[key].growZone;
+                factP.innerHTML = '<b>Fun Fact: </b>' + response.message.flowers[key].funFact;
+
+                img.setAttribute('src', response.message.flowers[key].image);
+                img.setAttribute('class', 'cardImg');
+                h3.setAttribute('class', 'cardTitle');
+                div.setAttribute('class', 'flowerCard');
+
+                div.appendChild(img);
+                div.appendChild(h3);
+                div.appendChild(sunP);
+                div.appendChild(soilP);
+                div.appendChild(heightP);
+                div.appendChild(bloomP);
+                div.appendChild(growP);
+                div.appendChild(factP);
+                content.appendChild(div);
               } 
             }
           }
@@ -107,56 +133,58 @@
       });
     }
 
+    window.onload = sendRequest('/getFlowers', 'get');
+
     window.onload = init;
   </script>
 </head>
 <body>
-  <div id="headerContent">
-    <h1 id="title">PetalPedia</h1>
+  <div id='headerContent'>
+    <h1 id='title'>PetalPedia</h1>
     <p>Can I grow the flower that I want in my environment? What kind of soil do I need? How tall will it get?</p>
     <p>Starting a flowerbed can be confusing, but with PetalPedia, it doesn't have to be.</p>
     <p>Sort through a multitude of flowers on our site or add your own to help others!</p>
   </div>
 
-  <form id="flowerForm">
-    <div id="flowerFormGroup1">
-      <label for="name">Name: </label>
-      <input id="flowerNameField" type="text" name="name" />
+  <form id='flowerForm'>
+    <div id='flowerFormGroup1'>
+      <label for='name'>Name: </label>
+      <input id='flowerNameField' type='text' name='name' />
 
-      <label for="image">Image: </label>
-      <input id="flowerImage" type="text" name="image"/>
+      <label for='image'>Image: </label>
+      <input id='flowerImage' type='text' name='image'/>
 
-      <label for="sunNeeds">Sun Needs: </label>
-      <input id="flowerSunNeeds" type="text" name="sunNeeds"/>
+      <label for='sunNeeds'>Sun Needs: </label>
+      <input id='flowerSunNeeds' type='text' name='sunNeeds'/>
 
-      <label for="soilNeeds">Soil Needs: </label>
-      <input id="flowerSoilNeeds" type="text" name="soilNeeds"/>
+      <label for='soilNeeds'>Soil Needs: </label>
+      <input id='flowerSoilNeeds' type='text' name='soilNeeds'/>
     </div>
-    <div id="flowerFormGroup2">
-      <label for="height">Height: </label>
-      <input id="flowerHeight" type="text" name="height"/>
+    <div id='flowerFormGroup2'>
+      <label for='height'>Height: </label>
+      <input id='flowerHeight' type='text' name='height'/>
 
-      <label for="bloomTime">Bloom Time: </label>
-      <input id="flowerBloomTime" type="text" name="bloomTime"/>
+      <label for='bloomTime'>Bloom Time: </label>
+      <input id='flowerBloomTime' type='text' name='bloomTime'/>
 
-      <label for="growZone">Grow Zone: </label>
-      <input id="flowerGrowZone" type="text" name="growZone"/>
+      <label for='growZone'>Grow Zone: </label>
+      <input id='flowerGrowZone' type='text' name='growZone'/>
 
-      <label for="funFact">Fun Fact: </label>
-      <input id="flowerFunFact" type="text" name="funFact"/>
+      <label for='funFact'>Fun Fact: </label>
+      <input id='flowerFunFact' type='text' name='funFact'/>
     </div>
-    <div id="addFlower">
-      <input type="submit" value="Add Flower" />
-    </div>
-  </form>
-
-  <form id="actionForm" action="/getFlowers" method="get">
-    <div id="refresh">
-      <input type="submit" value="Refresh" />
+    <div id='addFlower'>
+      <input type='submit' value='Add Flower' />
     </div>
   </form>
 
-  <section id="content">
+  <form id='actionForm' action='/getFlowers' method='get'>
+    <div id='refresh'>
+      <input type='submit' value='Refresh' />
+    </div>
+  </form>
+
+  <section id='content'>
   </section>
 
   <footer>
