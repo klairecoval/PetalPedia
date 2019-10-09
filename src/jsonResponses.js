@@ -1,6 +1,67 @@
 const query = require('querystring');
 
-const flowers = {};
+const flowers = {
+  'Blackeyed Susan': {
+    name: 'Blackeyed Susan',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/black-eyed-susan-334122.jpg',
+    sunNeeds: 'Full Sun',
+    soilNeeds: 'Well-drained',
+    height: '1-3ft',
+    bloomTime: 'Late Summer - Mid Fall',
+    growZone: '3-9',
+    funFact: 'Good for cut flowers',
+  },
+  'Daffodil': {
+    name: 'Daffodil',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/flower-661585.jpg',
+    sunNeeds: 'Full Sun',
+    soilNeeds: 'Well-drained',
+    height: '0.25-2ft',
+    bloomTime: 'Spring',
+    growZone: '3-9',
+    funFact: 'Good for cut flowers',
+  },
+  'Daisy': {
+    name: 'Daisy',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/daisies-276112.jpg',
+    sunNeeds: 'Full Sun',
+    soilNeeds: 'Well-drained',
+    height: '0.8-3ft',
+    bloomTime: 'Late Spring - Early Summer',
+    growZone: '2-11',
+    funFact: 'Good for cut flowers',
+  },
+  'Lupine': {
+    name: 'Lupine',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/beautiful-2223.jpg',
+    sunNeeds: 'Full Sun/Partial Shade',
+    soilNeeds: 'Well-drained',
+    height: '2.5-5ft',
+    bloomTime: 'Summer',
+    growZone: '3-9',
+    funFact: 'Good for cut flowers',
+  },
+  'Tulip': {
+    name: 'Tulip',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/beautiful-2223.jpg',
+    sunNeeds: 'Full Sun/Partial Shade',
+    soilNeeds: 'Well-drained',
+    height: '2.5-5ft',
+    bloomTime: 'Summer',
+    growZone: '3-9',
+    funFact: 'Good for cut flowers',
+  },
+  'Violet': {
+    name: 'Violet',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/tulip-271352.jpg',
+    sunNeeds: 'Full Sun',
+    soilNeeds: 'Well-drained',
+    height: '0.5-2.5ft',
+    bloomTime: 'Spring',
+    growZone: '4-8',
+    funFact: 'Good for cut flowers',
+  },
+};
 
 const respondJSON = (request, response, status, object) => {
   response.writeHead(status, { 'Content-Type': 'application/json' });
