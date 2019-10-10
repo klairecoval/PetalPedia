@@ -10,4 +10,7 @@ Flower Specs:
 - Fun fact
 
 Colors: https://colorpalettes.net/color-palette-973/
+
 Background image: https://www.toptal.com/designers/subtlepatterns/leaves-pattern/
+
+Heroku: https://petalpedia.herokuapp.com/
