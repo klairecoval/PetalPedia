@@ -1,5 +1,6 @@
 const query = require('querystring');
 
+// Setup API with initial content
 const flowers = {
   'Blackeyed Susan': {
     name: 'Blackeyed Susan',
@@ -11,7 +12,7 @@ const flowers = {
     growZone: '3-9',
     funFact: 'Good for cut flowers',
   },
-  'Daffodil': {
+  Daffodil: {
     name: 'Daffodil',
     image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/flower-661585.jpg',
     sunNeeds: 'Full Sun',
@@ -21,7 +22,7 @@ const flowers = {
     growZone: '3-9',
     funFact: 'Good for cut flowers',
   },
-  'Daisy': {
+  Daisy: {
     name: 'Daisy',
     image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/daisies-276112.jpg',
     sunNeeds: 'Full Sun',
@@ -31,7 +32,7 @@ const flowers = {
     growZone: '2-11',
     funFact: 'Good for cut flowers',
   },
-  'Lupine': {
+  Lupine: {
     name: 'Lupine',
     image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/beautiful-2223.jpg',
     sunNeeds: 'Full Sun/Partial Shade',
@@ -41,9 +42,9 @@ const flowers = {
     growZone: '3-9',
     funFact: 'Good for cut flowers',
   },
-  'Tulip': {
+  Tulip: {
     name: 'Tulip',
-    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/beautiful-2223.jpg',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/tulip-271352.jpg',
     sunNeeds: 'Full Sun/Partial Shade',
     soilNeeds: 'Well-drained',
     height: '2.5-5ft',
@@ -51,18 +52,19 @@ const flowers = {
     growZone: '3-9',
     funFact: 'Good for cut flowers',
   },
-  'Violet': {
+  Violet: {
     name: 'Violet',
-    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/tulip-271352.jpg',
-    sunNeeds: 'Full Sun',
+    image: 'https://www.proflowers.com/blog/wp-content/plugins/pf-flowertypes/image/plant-978227.jpg',
+    sunNeeds: 'Full Sun/Partial Shade',
     soilNeeds: 'Well-drained',
-    height: '0.5-2.5ft',
-    bloomTime: 'Spring',
-    growZone: '4-8',
-    funFact: 'Good for cut flowers',
+    height: '0.25-1ft',
+    bloomTime: 'Early Spring - Early Fall',
+    growZone: '3-9',
+    funFact: 'Non-invasive',
   },
 };
 
+// Steamline JSON responses to not repeat code
 const respondJSON = (request, response, status, object) => {
   response.writeHead(status, { 'Content-Type': 'application/json' });
   response.write(JSON.stringify(object));
@@ -74,6 +76,7 @@ const respondJSONMeta = (request, response, status) => {
   response.end();
 };
 
+// Return all flowers as JSON data
 const getFlowers = (request, response) => {
   const responseJSON = {
     message: { flowers },
@@ -82,15 +85,17 @@ const getFlowers = (request, response) => {
   return respondJSON(request, response, 200, responseJSON);
 };
 
-const notReal = (request, response) => {
+// Return 404 error if URL does not exist
+const notFound = (request, response) => {
   const responseJSON = {
     message: 'The page you are looking for was not found.',
-    id: 'notReal',
+    id: 'NotFound',
   };
 
   return respondJSON(request, response, 404, responseJSON);
 };
 
+// Add flower to API
 const addFlower = (request, response) => {
   let body = [];
 
@@ -104,10 +109,11 @@ const addFlower = (request, response) => {
 
     const responseJSON = {};
 
-    if (!body.name ||!body.image ||
-        !body.sunNeeds || !body.soilNeeds ||
-        !body.height || !body.bloomTime ||
-        !body.growZone || !body.funFact) {
+    // Check if all inputs are filled out
+    if (!body.name || !body.image
+        || !body.sunNeeds || !body.soilNeeds
+        || !body.height || !body.bloomTime
+        || !body.growZone || !body.funFact) {
       responseJSON.message = 'Please fill out all flower fields.';
       responseJSON.id = 'missingParams';
       return respondJSON(request, response, 400, responseJSON);
@@ -115,12 +121,14 @@ const addFlower = (request, response) => {
 
     let responseCode = 201;
 
+    // Check for flower update based on name
     if (flowers[body.name]) {
       responseCode = 204;
     } else {
       flowers[body.name] = {};
     }
 
+    // Append information
     flowers[body.name].name = body.name;
     flowers[body.name].image = body.image;
     flowers[body.name].sunNeeds = body.sunNeeds;
@@ -139,8 +147,25 @@ const addFlower = (request, response) => {
   });
 };
 
+// Given URL, find flower with name matching query and display JSON
+const searchFlower = (request, response, params) => {
+  const responseJSON = {
+    message: flowers[params.name],
+  };
+
+  // Throw error if /searchFlower is missing query
+  if (!params.name) {
+    responseJSON.message = 'Missing valid name';
+    responseJSON.id = 'badRequest';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+
+  return respondJSON(request, response, 200, responseJSON);
+};
+
 module.exports = {
   getFlowers,
-  notReal,
+  notFound,
   addFlower,
+  searchFlower,
 };

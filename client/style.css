@@ -12,6 +12,11 @@ body {
     background-image: url('/assets/leavesBg.png');
 }
 
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
 #headerContent {
     line-height: 0.5rem;
     text-align: center;
@@ -53,7 +58,8 @@ input[type=text] {
     line-height: 1.5rem;
 }
 
-input[type=submit] {
+input[type=submit], button {
+    color: #000000;
     background: #fe9578;
     border-radius: 4rem;
     border: none;
@@ -62,7 +68,7 @@ input[type=submit] {
     transition: background 1s;
 }
 
-input[type=submit]:hover {
+input[type=submit]:hover, button:hover {
     background: #CB6245;
     transition: background 1s;
     cursor: pointer;
@@ -84,6 +90,10 @@ input[type=submit]:hover {
     margin: 0.25rem 0.5rem;
     line-height: 1rem;
     box-shadow: 0px 2px 8px 1px rgba(82,79,61,0.4);
+}
+
+#content {
+    margin: 0 auto;
 }
 
 #content .flowersNum {

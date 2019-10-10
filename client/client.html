@@ -7,21 +7,20 @@
   
   <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js'></script>
   <script type='text/babel'>
-      const handleResponse = (xhr, parseJSON) => {
-      const response = JSON.parse(xhr.response);
+    // Update client display based on XHR status/response
+    const handleResponse = (xhr, parseJSON) => {
       const content = document.querySelector('#content');
-      
-      function count(obj) { return Object.keys(obj).length; }
 
+      // Change content depending on what status code is thrown
       switch (xhr.status) {
         case 200:
-          content.innerHTML = `<h3 class="flowersNum">${count(response.message.flowers)} Flowers</h3>`;
+          content.innerHTML = `<h3 class="flowersNum"> Flowers</h3>`;
           break;
         case 201:
           content.innerHTML = `<b>Flower Created. Click 'Refresh' Button.</b>`;
           break;
         case 204:
-          content.innerHTML = `<b>Flower updated.</b>`;
+          content.innerHTML = `<b>Flower updated. Refresh page.</b>`;
           break;
         case 400:
           content.innerHTML = `<h2>Hey there...are you forgetting something?</h2>`;
@@ -33,6 +32,7 @@
           break;
       }
 
+      // Setup flower cards for get request
       if (parseJSON) {
         const response = JSON.parse(xhr.response);
         console.dir(response.message);
@@ -77,11 +77,13 @@
             }
           }
         } else {
+          // Display helper text (fill in all fields, refresh page, etc.)
           content.innerHTML += `<p>${response.message}</p>`;
         }
       }
     };
 
+    // Send requests and get formData back for query, use Accept header for client
     const sendRequest = (url, type, e) => {
       const xhr = new XMLHttpRequest();
 
@@ -96,6 +98,8 @@
           handleResponse(xhr, false);
         }
       };
+
+      // Update formData for query
       if (type === 'post') {
         const flowerForm = document.querySelector('#flowerForm');
         const nameField = flowerForm.querySelector('#flowerNameField');
@@ -117,11 +121,13 @@
       }
     };
 
+    // Setup inputs to handle requests on click
     const init = () => {
       const flowerForm = document.querySelector('#flowerForm');
       const actionForm = document.querySelector('#actionForm');
       const getFlowers = actionForm.querySelector('input');
       const postFlower = flowerForm.querySelectorAll('input')[8];
+      const header = document.getElementById('title');
 
       getFlowers.addEventListener('click', e => {
         e.preventDefault();
@@ -131,19 +137,24 @@
         e.preventDefault();
         sendRequest('/addFlower', 'post', e);
       });
+      header.addEventListener('click', e => {
+        e.preventDefault();
+        sendRequest('/getFlowers', 'head', e);
+      });
     }
 
+    // Load in flowers on window load and initialize
     window.onload = sendRequest('/getFlowers', 'get');
-
     window.onload = init;
   </script>
 </head>
+
 <body>
   <div id='headerContent'>
     <h1 id='title'>PetalPedia</h1>
     <p>Can I grow the flower that I want in my environment? What kind of soil do I need? How tall will it get?</p>
     <p>Starting a flowerbed can be confusing, but with PetalPedia, it doesn't have to be.</p>
-    <p>Sort through a multitude of flowers on our site or add your own to help others!</p>
+    <p>Scroll through a multitude of flowers on our site or add your own to help others!</p>
   </div>
 
   <form id='flowerForm'>
